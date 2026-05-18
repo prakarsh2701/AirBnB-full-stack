@@ -1,48 +1,49 @@
 package com.prakarsh.projects.airBnbApp.entity;
 
+
+import com.prakarsh.projects.airBnbApp.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "hotel")
-public class Hotel {
-
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true,nullable = false)
+    private String email;
+
     @Column(nullable = false)
+    private String password;
+
     private String name;
 
-    private String city;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
-    @Column(columnDefinition = "TEXT[]")
-    private String[] photos;
+    @Column(nullable = false)
+    private Integer roomsCount;
 
-    @Column(columnDefinition = "TEXT[]")
-    private String[] amenities;
+    @Column(nullable = false)
+    private LocalDate checkInDate;
+
+    @Column(nullable = false)
+    private LocalDate checkOutDate;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @Embedded
-    private HotelContactInfo contactInfo;
-
-    @Column(nullable = false)
-    private  Boolean active;
-
-    @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms;
-
 }
