@@ -15,6 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String name;
 
     @ElementCollection(fetch = FetchType.EAGER)
